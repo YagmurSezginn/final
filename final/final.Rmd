@@ -1,0 +1,190 @@
+---
+title: "Üniversite Öğrencilerinde Başarıyı Etkileyen Faktörler"
+author: 
+  - Yağmur Sezgin[^1]
+bibliography: ../bibliography/biblio.bib
+csl: ../csl/apa-tr.csl
+header-includes:
+  - \usepackage{polyglossia}
+  - \setmainlanguage{turkish}
+  - \usepackage{booktabs}
+  - \usepackage{caption} 
+  - \captionsetup[table]{skip=10pt}
+output:
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 3
+    fig_width: 4
+    keep_tex: no
+    latex_engine: xelatex
+    number_sections: yes
+    toc: no
+geometry: margin=1in
+link-citations: yes
+urlcolor: blue
+fontsize: 12pt
+biblio-style: apalike
+abstract: |
+  Üniversite öğrenciliği, birçok gencin düşlerinde ve hayallerinde özlemle istenen ve beklenen bir yaşam dönemidir. Bu dönemde tabii ki, öğrenciler için en önemli olan derslerinde başarılı olmaktır. Bu araştırmamızda toplam not ortalamasında önemli olan etkenlere bakmaya çalıştık. Diğer değişkenlerle sadece uyku saati ile kalkülüs notu arasında anlamlı pozitif korelasyon katsayısının olduğunu gördük. Çalışma durumlarına göre baktığımızda ise yarı zamanlı olarak çalışanların en yüksek ortalamaya sahipken tam zamanlı çalışanlarsa en az ortalamayı kazanan öğrencilerdi. Kadın erkek öğrencilerin toplam not ortalamalarına baktığımızda da kadın öğrenciler erkeklerden 2 puan daha fazla alıyor. Özet istatistikler tablosuna göre de en az ortalama ve medyan değerine sahip olduğu için Kalkülüs dersini en zor ders olarak saya biliriz. Boş zamanlara göre not ortalaması dağılımlarına baktığımızda da normal olarak en az boş zaman geçirenlerin en yüksek not aldığını gördük. 
+  
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- ======================================================================= -->
+<!-- ============================== NOTLAR ================================= -->
+<!-- ======================================================================= -->
+[^1]: 20080298, [Github Repo](https://github.com/YagmurSezginn/final)
+
+# Giriş
+
+Üniversite dönemi bireyin eğitim aşamasının en önemlilerinden birisidir. Bireylerin gelecekteki hayatlarını yönlendirmede üniversite eğitimi büyük bir rol oynamaktadır. Bu nedenle öğrencilerin başarısını etkileyen faktörlerin bilinmesi büyük önem taşımaktadır.Derste başarını etkileyen bir çok faktör vardır ve çoğu zaman başarıyı zeka ile bağdaştırırlar. Ancak başarı sadece zekanın ürünü değildir. Bir çok dışsal faktör de bunu etkilemektedir. Kişisel özellikler hep ön sırada tutulduğu için başarıya ait bir genelleme yapılmamaktadır. 
+Araştırmada kullanılacak olan veri [**thelittledataset.com**](https://thelittledataset.com/data_code/) sitesi üzerinden alınmıştır. Veri ABD'de bir üniversite öğrencileri hakkındaki bilgileri kapsamakta, toplam 165 öğrenciden alınmıştır. 11 değişken 165 gözlemden oluşmaktadır.
+Veride öğrencinin ismi, cinsiyeti, yaşı,toplam uyku saati,matematik coğrafya ve fizik ders notları, boş zaman saatleri, medeni durumları ve son olarak çalışma durumları vardır. Ayrıca veride öğrencilerin ders çalışma saatleri bulunmuyor bunu uyku, boş zaman ve işten arta kalan zaman olarak kabul edeceğiz.
+
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+df <- read_excel('../data/data.xlsx')
+
+
+
+```
+
+
+## Çalışmanın Amacı
+
+Çoğu zaman yeterli uykunun derste başarılı olmada en önemli sebep olduğu söylenilir. Bu çalışmada bu argümanin ne kadar doğru olduğunu uyku saati çok olanların diğerlerine göre hangi derste daha çok başarılı olduğu veya bir farkın varlığı t testi ile test edilecektir. Ayrıca öğrencilerin medeni durumlarının da ders notlarını ne derecede etkilediğine bakmak için de korelasyon analizi yapılacaktır. 
+
+
+
+## Literatür 
+
+Yaygın olarak başarısızlığın nedeninin yeterince çalışmamak olduğu söylenmekte ve öğrencilere sık sık çalışmaları gerektiği hatırlatılmaktadır. Öğrencilerin başarısını çok sayıda faktör (fiziksel, ruhsal, toplumsal, ekonomik, coğrafi, çevre vb.)
+etkilemektedir[@renccber2012universite]. Öğrencilerin başarılı olabilmesi için bu faktörlerden olumsuz
+yönde etkilenmemesi gerekmektedir. Oysa ders çalışma becerileri, öğrencinin motivasyonundan, zamanı tam ve doğru olarak kullanmasından etkilenmektedir. Motivasyon, öğrencinin, belli bir öğrenme durumuna ne kadar zaman harcamak isteği olarak tanımlanmaktadır.Ders çalışma becerileri, öğrencilerin motivasyonundan, zamanı tam ve doğru olarak kullanmasından etkilenmektedir. Motivasyon, okuldaki öğrenci davranışlarının yönünü, şiddetini ve kararlılığını belirleyen en önemli güç kaynaklarından biridir. Yeterince güdülenmiş bir öğrenci, öğrenmeye hazır hale gelmiş ve öğrenmeiçin zaman ayırmaya istekli demektir[@bay2005universite]. Eğitim öğretim sürecinin sonunda, öğrencilerin başarısız olması, eğitime yapılan harcamaların önemli bir bölümünün boşa gitmesine neden olurken, öte yandan da toplumun istediği insan gücünün yetişmeyeceği endişesini de kuvvetlendirmektedir[@tumkaya2006ccukurova]. Aslında üniversitedeki derslerinin çoğunun  ezbere dayalı olduğu için hafıza da başarıda önemli faktördür. @fowler1973sleep yaptığı çalışmada uyku ile hafıza arasında kısa sürede ve uzun sürede güçlü korelasyon olduğunu saptadı. Buradan da aslında yeterince uykuyu hafızayla özdeşleştireceğiz. Kısa uyku süreleri genel sağlığa zararlı olmakla birlikte gün içinde aşırı strese de sebep olmaktadır. Stress odaklanmayı kısıtladığı için de çalışmayı zorlaştırır. Ayrıca @regehr2013interventions araştırmasında stresin başarıyı etkilemede önemli olduğu bulunmuştur. Uykunun stresste önemli faktör olduğu için aralarında pozitif korelasyon olması gerekmektedir.
+
+
+
+
+
+
+# Veri 
+Özet istatistikler tablosuna(\ref{tab:ozet}) bakılırsa veride detayları bulunan öğrencilerin ortalama yaşının ve medyan değerinin 22'ye eşit olduğunu görüyoruz. Minimum 18 yaşlı birinin katıldığı araştırmada en yüksek yaş 26'dır , standart sapmayı ise 2.64 olarak buluyoruz.
+
+Dersler için ortalama ve medyan bakımından kazanılan notlara bakılırsa en az puan alınan dersin Kalkülüs ve en yüksek not alınan dersin ise Coğrafya olduğu açıktır. En düşük maksimum not da Kalkülüs dersinden alınmıştır. Minimum notlarda ise pek farklılık görünmüyor. Bu 3 dersin ortalamasına bakılırsa ise medyan değerini 55 olarak buluyoruz.
+
+Uyku saatlerine bakılırsa üniversite öğrencilerinin az uyudukları söylenebilir. Medyan değeri ise 6 saatdir. Uyku sürelerinin bu denli az olması derslerin ve diğer işlerin yoğunluğu ile anlamlandırılabilir. Minimum değer olan 1 saat ise pek reel bir bilgi olarak görünmüyor.
+
+
+```{r, echo=FALSE}
+library(xtable) 
+# devtools::install_github("emraher/summarytools")
+library(summarytools)
+st_options(lang = "tr")
+```
+
+
+```{r results='asis', echo=FALSE}
+df %>%
+  select("age", "sleep_hours", "overall", "Calculus", "Geography", "Pyhsics") %>% 
+  descr(stats = c("mean", "sd", "min", "med", "max"), transpose = TRUE) %>% 
+  xtable(caption = "Özet İstatistikler",
+         label = "tab:ozet",
+         align = c("l", "c", "c", "c", "c", "c")) %>% 
+  print(booktabs = TRUE, comment = FALSE, caption.placement = "top")
+```
+
+\newpage
+
+# Yöntem ve Veri Analizi
+
+Şekil \@ref(fig:plot)-de gördüğümüz gibi öğrencinin yaşı ile diğer herhangi bir veri arasında anlamlı bir ilişki yoktur. Bu yaşın artmasının ya da azalmasının diğer verilere pozitif ya da negatif yönden bir etki etmediği anlamına geliyor. Derslerde alınan notların da bir birleri ile arasında herhangi bir anlamlı ilişki görünmüyor. Sadece uyku saati ile Kalkülüs notu arasında çok büyük olmasa da anlamlı pozitif korelasyon katsayısının olduğunu görüyoruz. Yani çok uyuyanların notu Kalkülüsde daha yüksek olma eğilimindedir(tersi de geçerli).
+
+
+```{r plot, echo=FALSE, fig.height=4, fig.width=6, fig.cap = "Korelasyon Matrisi"}
+
+df %>% 
+  select(overall, sleep_hours, age, Calculus, Geography, Pyhsics) %>% 
+  GGally::ggpairs()
+
+
+```
+
+
+Şekil \@ref(fig:plotS)-de açıkça 1 saatden daha az boş zaman ayıran öğrencilerin diğerlerinden toplam ortalamada daha çok not aldıkları görünüyor. Maksimum olarak diğer gruplardan geri kalsalar da en düşük not bakımından çok daha yüksek not alıyorlar. 3 saat gibi boş zaman geçirenler medyana bakılırsa 4 saatden fazla boş zaman geçirenlerden daha yüksek not alıyorlar ancak, 1 ve 3-cü çeyreklikler arasına bakılırsa 4 saatden fazla boş zamanı olanlar daha başarılı olarak görünüyor. Minimum ve maksimum değerlerine göre de bu iki kategori birbirine yakındır. Boş zaman kategorisine göre notlara baktığımız da da herhangi bir aykırı değere denk gelmiyoruz. 3 saat boş zamanı olanların notlarının medyan değerini 54, 4 saatden fazla boş zamanı olanların 51 ve 1 saatden az boş zaman geçiren öğrencilerin medyan notunun 67 olduğunu görüyoruz.
+
+
+```{r include=FALSE}
+library(broom)
+
+df %>% 
+  group_by(leisure_times) %>% 
+  summarise(var = median(overall))
+```
+
+```{r plotS, echo=FALSE, fig.height=4, fig.width=6, fig.cap= "Boş zamanla Notlar arasında ilişki"}
+
+df %>% 
+  na.omit() %>% 
+  ggplot(aes(x = leisure_times, y = overall, fill = leisure_times)) +
+  geom_boxplot() +
+  labs(x = "Boş Zaman",
+       y = "Not") 
+
+```
+
+Şekil \@ref(fig:plotSs)-de tam saatli çalışanların not ortalamasının diğerlerine göre daha normal olarak dağıldığını görüyoruz ve en yüksek olan yoğunluğun da diğerlerine göre daha az puanlarda olduğunu görüyoruz. Yani tam saatli bir işte çalışanlar diğerlerine göre daha az not alıyorlar. Hiç bir işte çalışmayan öğrencilerin not dağılımı da tam saatli işte çalışanlarla neredeyse aynı dağılıma sahip olduğu görünüyor. Yarı zamanlı işte çalışanların not dağılımı ise diğer 2 gruptan ayrılıyor. Not dağılımında daha sağa çarpık bir dağılım görüyoruz. Yani bu grupta yüksek not alanlar daha fazladır.
+
+```{r plotSs, echo=FALSE, fig.height=4, fig.width=6, fig.cap= "Çalışma durumlarına göre Not Dağılımı"}
+df %>%
+  ggplot() +
+  aes(x = overall, group = job_status, fill = job_status) +
+  geom_density() +
+  facet_wrap(~job_status) +
+  labs(y = "Density", x = "Not")
+```
+
+Cinsiyet bazında ortalama notlara bakılırsa toplam ortalama notda kadınlar erkek öğrencilerden 2 puan fazla ortalamaya sahiptir.
+Evli öğrenciler veride az olduğundan ortalamaları için normallik testi yaptığımızda da normal dağılıma sahip olmadığı görünüyor.
+
+```{r include=FALSE}
+
+
+df %>% 
+  group_by(sex) %>% 
+  summarise(mean = mean(overall))
+
+
+```
+
+```{r include=FALSE}
+df %>% 
+  group_by(married) %>% 
+  nest() %>% 
+  mutate(Shapiro = map(data, ~shapiro.test(.x$overall))) %>% 
+  mutate(glance_shapiro = Shapiro %>% map(glance)) %>% 
+  unnest(glance_shapiro) %>% 
+  select(married, statistic, p.value)
+```
+
+
+
+
+
+
+\newpage
+# Sonuç
+Çalışmada yeterli uykunun derslerde başarılı olmak için önemli sebep olduğunu varsaymıştık. Özet istatistikler tablosundan ortalama uyku saatlerine bakılırsa üniversite öğrencilerinin yeterli uyku aldığı söylenemez ve ortalama notlar da yüksek değildir. Uyku saati ile sadece bir ders arasında pozitif korelasyon katsayısı olduğunu görsek de bu değer için veriler arasında güçlü bağıntı olduğu söylenemez. 
+Toplam veride evli olan öğrenciler çok az olduğu için ortalamaları da normal dağılıma sahip değildir. Bu yüzden herhangi bir grafik üzerindeki farklılıkları yorumlamak ve doğru sonuçlara ulaşmak mümkün değildir.
+Çalışma saatlerine göre derslerdeki başarı oranlarına baktığımızda da garip bir şekilde tam zamanlı çalışanlarla hiç çalışmayanların arasında pek bir fark göremiyoruz. Yarı zamanlı çalışanlarsa en yüksek not ortalamasına sahip kişilerdir.
+Boş zamanlar bakımından beklenildiği gibi 1 saatden az boş zamanı olanlar ortalama olarak en yüksek notu alan kişilerdir. Ancak yine de diğer iki kategori arasında bir farklılık görmüyoruz.
+Her veriye uygun  fazla örneklem datasına ulaşırsak verinin normal dağılıma yaklaşacağı için istatistiksel testlerde de daha anlamlı sonuçlar göre biliriz. Öğrencilere uygun daha spesifik bilgiler de toplanılsaydı notu tahmin ede bileceğimiz regresyon analizi yapa biliriz.
+
+\newpage
+# Kaynakça {#references}
+<div id="refs"></div>
+

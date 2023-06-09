@@ -1,0 +1,76 @@
+---
+title: "Üniversite Öğrencilerinde Başarıyı Etkileyen Faktörler"
+author: 
+  - Yağmur Sezgin[^1]
+bibliography: ../bibliography/biblio.bib
+csl: ../csl/apa-tr.csl
+header-includes:
+  - \usepackage{polyglossia}
+  - \setmainlanguage{turkish}
+  - \usepackage{booktabs}
+  - \usepackage{caption} 
+  - \captionsetup[table]{skip=10pt}
+output:
+  bookdown::pdf_document2:
+    fig_caption: yes
+    fig_height: 3
+    fig_width: 4
+    keep_tex: no
+    latex_engine: xelatex
+    number_sections: yes
+    toc: no
+geometry: margin=1in
+link-citations: yes
+urlcolor: blue
+fontsize: 12pt
+biblio-style: apalike
+---
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache = FALSE, echo = TRUE, message = FALSE, warning = FALSE)
+```
+
+<!-- ======================================================================= -->
+<!-- ============================== NOTLAR ================================= -->
+<!-- ======================================================================= -->
+[^1]: 20080298, [Github Repo](git@github.com:YagmurSezginn/arasinavi.git)
+
+
+
+
+
+# Giriş
+
+Üniversite dönemi bireyin eğitim aşamasının en önemlilerinden birisidir. Bireylerin gelecekteki hayatlarını yönlendirmede üniversite eğitimi büyük bir rol oynamaktadır. Bu nedenle öğrencilerin başarısını etkileyen faktörlerin bilinmesi büyük önem taşımaktadır.Derste başarını etkileyen bir çok faktör vardır ve çoğu zaman başarıyı zeka ile bağdaştırırlar. Ancak başarı sadece zekanın ürünü değildir. Bir çok dışsal faktör de bunu etkilemektedir. Kişisel özellikler hep ön sırada tutulduğu için başarıya ait bir genelleme yapılmamaktadır. 
+Araştırmada kullanılacak olan veri [**thelittledataset.com**](https://thelittledataset.com/data_code/) sitesi üzerinden alınmıştır. Veri ABD'de bir üniversite öğrencileri hakkındaki bilgileri kapsamakta, toplam 165 öğrenciden alınmıştır. 11 değişken 165 gözlemden oluşmaktadır.
+Veride öğrencinin ismi, cinsiyeti, yaşı,toplam uyku saati,matematik coğrafya ve fizik ders notları, boş zaman saatleri, medeni durumları ve son olarak çalışma durumları vardır. Ayrıca veride öğrencilerin ders çalışma saatleri bulunmuyor bunu uyku, boş zaman ve işten arta kalan zaman olarak kabul edeceğiz.
+
+
+
+```{r include=FALSE}
+library(tidyverse)
+library(readxl)
+df <- read_excel('data.xlsx')
+
+
+
+```
+
+
+## Çalışmanın Amacı
+
+Çoğu zaman yeterli uykunun derste başarılı olmada en önemli sebep olduğu söylenilir. Bu çalışmada bu argümanin ne kadar doğru olduğunu uyku saati çok olanların diğerlerine göre hangi derste daha çok başarılı olduğu veya bir farkın varlığı t testi ile test edilecektir. Ayrıca öğrencilerin medeni durumlarının da ders notlarını ne derecede etkilediğine bakmak için de korelasyon analizi yapılacaktır. 
+
+
+
+## Literatür 
+
+Yaygın olarak başarısızlığın nedeninin yeterince çalışmamak olduğu söylenmekte ve öğrencilere sık sık çalışmaları gerektiği hatırlatılmaktadır. Öğrencilerin başarısını çok sayıda faktör (fiziksel, ruhsal, toplumsal, ekonomik, coğrafi, çevre vb.)
+etkilemektedir[@renccber2012universite]. Öğrencilerin başarılı olabilmesi için bu faktörlerden olumsuz
+yönde etkilenmemesi gerekmektedir. Oysa ders çalışma becerileri, öğrencinin motivasyonundan, zamanı tam ve doğru olarak kullanmasından etkilenmektedir. Motivasyon, öğrencinin, belli bir öğrenme durumuna ne kadar zaman harcamak isteği olarak tanımlanmaktadır.Ders çalışma becerileri, öğrencilerin motivasyonundan, zamanı tam ve doğru olarak kullanmasından etkilenmektedir. Motivasyon, okuldaki öğrenci davranışlarının yönünü, şiddetini ve kararlılığını belirleyen en önemli güç kaynaklarından biridir. Yeterince güdülenmiş bir öğrenci, öğrenmeye hazır hale gelmiş ve öğrenmeiçin zaman ayırmaya istekli demektir[@bay2005universite]. Eğitim öğretim sürecinin sonunda, öğrencilerin başarısız olması, eğitime yapılan harcamaların önemli bir bölümünün boşa gitmesine neden olurken, öte yandan da toplumun istediği insan gücünün yetişmeyeceği endişesini de kuvvetlendirmektedir[@tumkaya2006ccukurova]. Aslında üniversitedeki derslerinin çoğunun  ezbere dayalı olduğu için hafıza da başarıda önemli faktördür. @fowler1973sleep yaptığı çalışmada uyku ile hafıza arasında kısa sürede ve uzun sürede güçlü korelasyon olduğunu saptadı. Buradan da aslında yeterince uykuyu hafızayla özdeşleştireceğiz. Kısa uyku süreleri genel sağlığa zararlı olmakla birlikte gün içinde aşırı strese de sebep olmaktadır. Stress odaklanmayı kısıtladığı için de çalışmayı zorlaştırır. Ayrıca @regehr2013interventions araştırmasında stresin başarıyı etkilemede önemli olduğu bulunmuştur. Uykunun stresste önemli faktör olduğu için aralarında pozitif korelasyon olması gerekmektedir.
+
+
+
+\newpage
+# Kaynakça {#references}
+<div id="refs"></div>
+
